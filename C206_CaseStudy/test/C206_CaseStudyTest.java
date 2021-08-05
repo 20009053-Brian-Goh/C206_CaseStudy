@@ -21,41 +21,26 @@ public class C206_CaseStudyTest {
 	public void setUp() throws Exception {
 		// prepare test data
 
-		tt1 = new TuitionTimetable(1, 100, "12", "13", "idkWTFisthis");
-		tt2 = new TuitionTimetable(2, 200, "13", "12", "stilldkWTFdis");
-		tt3 = new TuitionTimetable(3, 300, "15", "14", "SIMILANJIO");
+		tt1 = new TuitionTimetable(1, 100.0, "12", "13", "Mode 1");
+		tt2 = new TuitionTimetable(2, 200.0, "13", "12", "Mode 2");
+		tt3 = new TuitionTimetable(3, 300.0, "15", "14", "Mode 3");
 
 		timetableList = new ArrayList<TuitionTimetable>();
 	}
 
-	@After
-	public void tearDown() throws Exception {
-		tt1 = null;
-		tt2 = null;
-		tt3 = null;
-
-		timetableList = null;
-	}
-
-	@Test
-	public void c206_test() {
-		// fail("Not yet implemented");
-		assertTrue("C206_CaseStudy_SampleTest ", true);
-	}
-
 	@Test
 	public void addTuitionTimetableTest() { // Indra
-		// Item list is not null, so that can add a new item - boundary
+		//Test that timetable list is not null, so that can add a new item - boundary
 		assertNotNull("Check if there is valid Timetable arraylist to add to", timetableList);
 
-		// Given an empty list, after adding 1 item, the size of the list is 1 - normal
-		// The item just added is as same as the first item of the list
+		// Given an empty timetable list, test that after adding 1 timetable, the size of the list is 1 - normal
+		// Test that the timetable just added is as same as the first timetable of the list
 		C206_CaseStudy.addTimetable(timetableList, tt1);
 		assertEquals("Check that Timetable arraylist size is 1", 1, timetableList.size());
-		assertSame("Check that Timetableis added", tt1, timetableList.get(0));
+		assertSame("Check that Timetable is added", tt1, timetableList.get(0));
 
-		// Add another item. test The size of the list is 2? -normal
-		// The item just added is as same as the second item of the list
+		// Add another timetable. Test that the size of the list is 2 -normal
+		// Test that the timetable just added is as same as the second timetable of the list
 		C206_CaseStudy.addTimetable(timetableList, tt2);
 		assertEquals("Check that Timetable arraylist size is 2", 2, timetableList.size());
 		assertSame("Check that Timetable is added", tt2, timetableList.get(1));
@@ -63,28 +48,23 @@ public class C206_CaseStudyTest {
 
 	@Test
 	public void retrieveAllTimetableTest() { // Indra
-		// Test if Item list is not null but empty -boundary
-		// Test if Item list is not null but empty -boundary
-		assertNotNull("Test if there is valid Timetable arraylist to retrieve item", timetableList);
+		//Test that timetable list is not null, so that can retrieve a new item - boundary
+		assertNotNull("Test if there is a valid Timetable arraylist to retrieve timetable", timetableList);
 
-		// test if the list of timetables retrieved from the SourceCentre is empty -
-		// boundary
+		//Test that if the list of timetables retrieved from the SourceCentre is empty - boundary
 		String allTimetable = C206_CaseStudy.retrieveAllTimetable(timetableList);
 		String testOutput = "";
 		assertEquals("Check that ViewAllTimetablelist", testOutput, allTimetable);
 
-		// Given an empty list, after adding 2 items, test if the size of the list is 2
-		// - normal
+		//Given an empty timetable list, after adding 2 timetable, test if the size of the list is 2 - normal
 		C206_CaseStudy.addTimetable(timetableList, tt1);
 		C206_CaseStudy.addTimetable(timetableList, tt2);
 		assertEquals("Test that Timetable arraylist size is 2", 2, timetableList.size());
 
-		// test if the expected output string same as the list of timetables retrieved
-		// from the SourceCentre
+		//Test if the expected output string same as the list of timetables retrieved from the C206_CaseStudy.
 		allTimetable = C206_CaseStudy.retrieveAllTimetable(timetableList);
-		testOutput = String.format("%-10s %-30s %-10s %-10s %-20s\n", 1, 100, "12", "13", "idkWTFisthis");
-		testOutput += String.format("%-10s %-30s %-10s %-10s %-20s\n", 2, 200, "13", "12", "stilldkWTFdis");
-
+		testOutput = String.format("%-10s %-30s %-10s %-10s %-20s\n", 1, 100.0, "12", "13", "Mode 1");
+		testOutput += String.format("%-10s %-30s %-10s %-10s %-20s\n", 2, 200.0, "13", "12", "Mode 2");
 		assertEquals("Test that ViewAllTimetablelist", testOutput, allTimetable);
 
 	}
@@ -125,5 +105,13 @@ public class C206_CaseStudyTest {
 		// -Normal
 		assertEquals("Check that tuition list is not bigger than 0", 0, timetableList.size());
 	}
-}
 
+	@After
+	public void tearDown() throws Exception {
+		tt1 = null;
+		tt2 = null;
+		tt3 = null;
+
+		timetableList = null;
+	}
+}
