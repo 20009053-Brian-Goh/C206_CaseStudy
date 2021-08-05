@@ -3,69 +3,40 @@ import java.util.ArrayList;
 
 public class C206_CaseStudy {
 
-	private static final int OPTION_QUIT = 5;
-	private static final int OPTION_TUITION_QUIT = 4;
-
 	public static void main(String[] args) {
 
-		ArrayList<Tuition> tuitionList = new ArrayList<Tuition>();
 		ArrayList<TuitionTimetable> tuitionTimetableList = new ArrayList<TuitionTimetable>();
 
 		tuitionTimetableList.add(new TuitionTimetable(1, 100, "12", "13", "idktfisthis"));
 
 		int option = 0;
-		int optionTuition = 0;
+		int optionTimetable = 0;
 
 		while (option != 5) {
 			menu();
 			option = Helper.readInt("Enter an option > ");
 
 			if (option == 1) {
-				while (option != OPTION_TUITION_QUIT) {
-					C206_CaseStudy.menuTuition();
-					optionTuition = Helper.readInt("Enter an option > ");
-
-					if (optionTuition == 1) {
-						Tuition tt = inputTuition();
-						C206_CaseStudy.addTuition(tuitionList, tt);
-
-					} else if (optionTuition == 2) {
-						C206_CaseStudy.viewAllTuition(tuitionList);
-
-					} else if (optionTuition == 3) {
-
-					} else if (optionTuition == OPTION_TUITION_QUIT) {
-						System.out.println("Bye!");
-					} else {
-						System.out.println("Invalid option");
-					}
-				}
 
 			} else if (option == 2) {
 
 			} else if (option == 3) { // Indra
 				menuTimetable();
-				option = Helper.readInt("Enter an option > ");
+				optionTimetable = Helper.readInt("Enter an option > ");
 
-				if (option == 1) {
+				if (optionTimetable == 1) {
 					TuitionTimetable tt = inputTimetable(tuitionTimetableList);
 					addTimetable(tuitionTimetableList, tt);
-				} else if (option == 2) {
+				} else if (optionTimetable == 2) {
 					retrieveAllTimetable(tuitionTimetableList);
 					viewAllTimetable(tuitionTimetableList);
-				}
-
-				else if (option == 3) {
+				} else if (optionTimetable == 3) {
 					checkDeleteTimetable(tuitionTimetableList);
 				}
 
-			}
-
-			else if (option == 4) {
+			} else if (option == 4) {
 
 			} else if (option == 5) {
-
-			} else if (option == OPTION_QUIT) {
 				System.out.println("Bye!");
 			} else {
 				System.out.println("Invalid option");
@@ -91,16 +62,6 @@ public class C206_CaseStudy {
 		System.out.println("1. Add Tuition Timetable");
 		System.out.println("2. View Tuition Timetable");
 		System.out.println("3. Delete Tuition Timetable");
-	}
-
-	public static void menuTuition() { // Brian
-		C206_CaseStudy.setHeader("Tuition Management System");
-		System.out.println("1. Add tuition");
-		System.out.println("2. View tuition");
-		System.out.println("3. Delete tuition");
-		System.out.println("4. Quit");
-		Helper.line(80, "-");
-
 	}
 
 	public static void setHeader(String header) {
@@ -152,7 +113,7 @@ public class C206_CaseStudy {
 		return output;
 	}
 
-	public static void viewAllTimetable(ArrayList<TuitionTimetable> timetableList) {
+	public static void viewAllTimetable(ArrayList<TuitionTimetable> timetableList) { // Indra
 		C206_CaseStudy.setHeader("TIMETABLE LIST");
 		String output = String.format("%-30s %-20s %-30s %-30s %-30s\n", "Timetable ID", "Price", "Start Date/Time",
 				"End Date/Timee", "Mode");
@@ -175,74 +136,13 @@ public class C206_CaseStudy {
 
 	public static void checkDeleteTimetable(ArrayList<TuitionTimetable> tuitionList) { // Indra
 		C206_CaseStudy.retrieveAllTimetable(tuitionList);
-		int deleteID = Helper.readInt("Enter Tuition Code: ");
+		int deleteID = Helper.readInt("Enter Timetable ID to delete > ");
 		boolean isFound = deleteTimetable(tuitionList, deleteID);
 
 		if (isFound == false) {
-			System.out.println("Invalid tuition code!");
+			System.out.println("Invalid timetable ID!");
 		} else {
-			System.out.println("The tuition code " + deleteID + " has been deleted!");
-		}
-	}
-
-	public static Tuition inputTuition() { // Brian
-		String ttCode = Helper.readString("Enter tuition code (must be unique) > ");
-		String ttTitle = Helper.readString("Enter tuition title > ");
-		String ttSGN = Helper.readString("Enter subject group name > ");
-		String ttDesc = Helper.readString("Enter tuition description > ");
-		int ttDur = Helper.readInt("Enter tuition duration > ");
-		String ttPQ = Helper.readString("Enter pre-requisite > ");
-
-		Tuition tt = new Tuition(ttCode, ttTitle, ttSGN, ttDesc, ttDur, ttPQ);
-		return tt;
-
-	}
-
-	public static void addTuition(ArrayList<Tuition> tuitionList, Tuition tt) { // Brian
-
-		tuitionList.add(tt);
-		System.out.println("Tuition added");
-	}
-
-	public static String retrieveAllTuition(ArrayList<Tuition> tuitionList) { // Brian
-		String output = "";
-
-		for (int i = 0; i < tuitionList.size(); i++) {
-
-			output += String.format("%-114s \n", tuitionList.get(i).toString());
-		}
-		return output;
-	}
-
-	public static void viewAllTuition(ArrayList<Tuition> tuitionList) { // Brian
-		C206_CaseStudy.setHeader("Tuition List");
-		String output = String.format("%-15s %-15s %-20s %-22s %-18s %-20s\n", "TUITION CODE", "TUITION TITLE",
-				"SUBJECT GROUP NAME", "TUITION DESCRIPTION", "TUITION DURATION", "PRE-REQUISITE");
-		output += retrieveAllTuition(tuitionList);
-		System.out.println(output);
-	}
-
-	public static boolean doDeleteTuition(ArrayList<Tuition> tuitionList, String deleteCode) { // Brian
-		boolean isFound = false;
-		for (int i = 0; i < tuitionList.size(); i++) {
-			String tuitionCode = tuitionList.get(i).getTuitionCode();
-			if (deleteCode == tuitionCode) {
-				tuitionList.remove(i);
-				isFound = true;
-			}
-		}
-		return isFound;
-	}
-
-	public static void deleteTuition(ArrayList<Tuition> tuitionList) { // Brian
-		C206_CaseStudy.viewAllTuition(tuitionList);
-		String deleteCode = Helper.readString("Enter Tuition Code: ");
-		boolean isFound = doDeleteTuition(tuitionList, deleteCode);
-
-		if (isFound == false) {
-			System.out.println("Invalid tuition code!");
-		} else {
-			System.out.println("The tuition code " + deleteCode + " has been deleted!");
+			System.out.println("The timetable with the ID, " + deleteID + " has been deleted!");
 		}
 	}
 
