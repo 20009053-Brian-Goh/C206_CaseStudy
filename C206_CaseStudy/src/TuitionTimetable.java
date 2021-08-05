@@ -8,7 +8,7 @@
  *
  * indra, 4 Aug 2021 4:34:10 pm
  */
-public class TuitionTimetable {
+public class TuitionTimetable { // Indra
 	private int timetableID;
 	private double price;
 	private String startDateTime;
@@ -23,7 +23,7 @@ public class TuitionTimetable {
 		this.setMode(mode);
 	}
 
-	public int getTimetableID() {
+	public int getTimetableID() { 
 		return timetableID;
 	}
 

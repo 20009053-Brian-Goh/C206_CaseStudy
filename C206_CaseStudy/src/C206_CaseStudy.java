@@ -2,47 +2,65 @@ import java.util.ArrayList;
 
 public class C206_CaseStudy {
 
-	private static final int ADD_ITEMS = 1;
-	private static final int VIEW_ITEMS = 2;
-	private static final int DELETE_ITEMS = 3;
-	private static final int OPTION_QUIT = 4;
-
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 
+		ArrayList<Tuition> tuitionList = new ArrayList<Tuition>();
 		ArrayList<TuitionTimetable> tuitionTimetableList = new ArrayList<TuitionTimetable>();
+
+		tuitionTimetableList.add(new TuitionTimetable(1, 100, "12", "13", "idktfisthis"));
 
 		int option = 0;
 
-		while (option != OPTION_QUIT) {
-
+		while (option != 5) {
 			menu();
 			option = Helper.readInt("Enter an option > ");
 
-			if (option == ADD_ITEMS) {
+			if (option == 1) {
 
-			}
+			} else if (option == 2) {
 
-			else if (option == VIEW_ITEMS) {
+			} else if (option == 3) { // Indra
+				menuTimetable();
+				option = Helper.readInt("Enter an option > ");
 
-			}
+				if (option == 1) {
+					TuitionTimetable tt = inputTimetable(tuitionTimetableList);
+					addTimetable(tuitionTimetableList, tt);
+				}
 
-			else if (option == DELETE_ITEMS) {
+				else if (option == 2) {
+					retrieveAllTimetable(tuitionTimetableList);
+					viewAllTimetable(tuitionTimetableList);
+				}
 
-			}
+				else if (option == 3) {
+					checkDeleteTimetable(tuitionTimetableList);
+				}
 
-			else if (option == OPTION_QUIT) {
+			} else if (option == 4) {
+
+			} else if (option == 5) {
 				System.out.println("Bye!");
-			}
-
-			else {
+			} else {
 				System.out.println("Invalid option");
 			}
 
 		}
+
 	}
 
 	public static void menu() {
+		C206_CaseStudy.setHeader("Tuition Management System");
+		System.out.println("1. Maintain Tuition");
+		System.out.println("2. Registration of tuition timetable");
+		System.out.println("3. Maintain Tuition Timetable");
+		System.out.println("4. Maintain Student");
+		System.out.println("5. Quit");
+		Helper.line(80, "-");
+
+	}
+
+	public static void menuTimetable() { // Indra
 		C206_CaseStudy.setHeader("Tuition Management System");
 		System.out.println("1. Add Tuition Timetable");
 		System.out.println("2. View Tuition Timetable");
@@ -58,24 +76,79 @@ public class C206_CaseStudy {
 		Helper.line(80, "-");
 	}
 
-	// ================================= Option 1 View (CRUD - Read)
-	// =================================
-	public static String retrieveAllTimetable(ArrayList<TuitionTimetable> timetableList) {
+	public static boolean checkAddTimetable(ArrayList<TuitionTimetable> tuitionTimetableList, int addID) { // Indra
+		boolean isFound = false;
+
+		for (int i = 0; i < tuitionTimetableList.size(); i++) {
+			int timetableID = tuitionTimetableList.get(i).getTimetableID();
+			if (addID == timetableID) {
+				isFound = true;
+			}
+		}
+		return isFound;
+	}
+
+	public static TuitionTimetable inputTimetable(ArrayList<TuitionTimetable> timetableList) { // Indra
+		int timetableID = Helper.readInt("Enter timetable ID > ");
+		checkAddTimetable(timetableList, timetableID);
+
+		double price = Helper.readDouble("Enter price > ");
+		String startDateTime = Helper.readString("Enter start date/time > ");
+		String endDateTime = Helper.readString("Enter end date/time > ");
+		String mode = Helper.readString("Enter mode > ");
+
+		TuitionTimetable tt = new TuitionTimetable(timetableID, price, startDateTime, endDateTime, mode);
+		return tt;
+
+	}
+
+	public static void addTimetable(ArrayList<TuitionTimetable> timetableList, TuitionTimetable tt) { // Indra
+		timetableList.add(tt);
+		System.out.println("Timetable added!");
+	}
+
+	public static String retrieveAllTimetable(ArrayList<TuitionTimetable> timetableList) { // Indra
 		String output = "";
 
 		for (int i = 0; i < timetableList.size(); i++) {
 
-			output += String.format("%-84s \n", timetableList.get(i).toString());
+			output += String.format("%-30s %-20s %-30s %-30s %-30s\n", timetableList.get(i).getTimetableID(),
+					timetableList.get(i).getPrice(), timetableList.get(i).getStartDateTime(),
+					timetableList.get(i).getEndDateTime(), timetableList.get(i).getMode());
 		}
 		return output;
 	}
 
 	public static void viewAllTimetable(ArrayList<TuitionTimetable> timetableList) {
-		C206_CaseStudy.setHeader("Tuition Timetable LIST");
-		String output = String.format("%-10s %-30s %-10s %-10s %-20s\n", "ASSET TAG", "DESCRIPTION", "AVAILABLE",
-				"DUE DATE", "OPTICAL ZOOM");
+		C206_CaseStudy.setHeader("TIMETABLE LIST");
+		String output = String.format("%-30s %-20s %-30s %-30s %-30s\n", "Timetable ID", "Price", "Start Date/Time",
+				"End Date/Timee", "Mode");
 		output += retrieveAllTimetable(timetableList);
 		System.out.println(output);
 	}
 
+	public static boolean deleteTimetable(ArrayList<TuitionTimetable> tuitionTimetableList, int deleteID) { // Indra
+		boolean isFound = false;
+
+		for (int i = 0; i < tuitionTimetableList.size(); i++) {
+			int timetableID = tuitionTimetableList.get(i).getTimetableID();
+			if (deleteID == timetableID) {
+				tuitionTimetableList.remove(i);
+				isFound = true;
+			}
+		}
+		return isFound;
+	}
+
+	public static void checkDeleteTimetable(ArrayList<TuitionTimetable> tuitionList) { // Indra
+		C206_CaseStudy.retrieveAllTimetable(tuitionList);
+		int deleteID = Helper.readInt("Enter Tuition Code: ");
+		boolean isFound = deleteTimetable(tuitionList, deleteID);
+
+		if (isFound == false) {
+			System.out.println("Invalid tuition code!");
+		} else {
+			System.out.println("The tuition code " + deleteID + " has been deleted!");
+		}
+	}
 }
