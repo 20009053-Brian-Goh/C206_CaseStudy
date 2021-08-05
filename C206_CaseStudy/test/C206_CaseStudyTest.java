@@ -126,3 +126,4 @@ public class C206_CaseStudyTest {
 		assertEquals("Check that tuition list is not bigger than 0", 0, timetableList.size());
 	}
 }
+
