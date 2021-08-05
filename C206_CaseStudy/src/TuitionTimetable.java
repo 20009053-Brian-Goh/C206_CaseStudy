@@ -8,6 +8,7 @@
  *
  * indra, 4 Aug 2021 4:34:10 pm
  */
+
 public class TuitionTimetable { // Indra
 	private int timetableID;
 	private double price;
