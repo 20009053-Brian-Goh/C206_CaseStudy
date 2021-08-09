@@ -6,7 +6,7 @@
  * I declare that this code was written by me. I will not copy or allow others
  * to copy my code. I understand that copying code is considered as plagiarism.
  *
- * indra, 4 Aug 2021 4:34:10 pm
+ * indra(20012784), 4 Aug 2021 4:34:10 pm
  */
 public class TuitionTimetable { // Indra
 	private int timetableID;
@@ -14,16 +14,19 @@ public class TuitionTimetable { // Indra
 	private String startDateTime;
 	private String endDateTime;
 	private String mode;
+	private String status;
 
-	public TuitionTimetable(int timetableID, double price, String startDateTime, String endDateTime, String mode) {
-		this.setTimetableID(timetableID);
-		this.setPrice(price);
-		this.setStartDateTime(startDateTime);
-		this.setEndDateTime(endDateTime);
-		this.setMode(mode);
+	public TuitionTimetable(int timetableID, double price, String startDateTime, String endDateTime, String mode,
+			String status) {
+		this.timetableID = timetableID;
+		this.price = price;
+		this.startDateTime = startDateTime;
+		this.endDateTime = endDateTime;
+		this.mode = mode;
+		this.status = "Open";
 	}
 
-	public int getTimetableID() { 
+	public int getTimetableID() {
 		return timetableID;
 	}
 
@@ -63,5 +66,12 @@ public class TuitionTimetable { // Indra
 		this.mode = newMode;
 	}
 
-}
+	public String getStatus() {
+		return status;
+	}
 
+	public void setStatus(String newStatus) {
+		this.status = newStatus;
+	}
+
+}

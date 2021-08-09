@@ -21,9 +21,9 @@ public class C206_CaseStudyTest {
 	public void setUp() throws Exception {
 		// prepare test data
 
-		tt1 = new TuitionTimetable(1, 100.0, "12", "13", "Mode 1");
-		tt2 = new TuitionTimetable(2, 200.0, "13", "12", "Mode 2");
-		tt3 = new TuitionTimetable(3, 300.0, "15", "14", "Mode 3");
+		tt1 = new TuitionTimetable(1, 100, "12", "13", "Mode 1", "Open");
+		tt2 = new TuitionTimetable(2, 200.0, "13", "12", "Mode 2", "Open");
+		tt3 = new TuitionTimetable(3, 300.0, "15", "14", "Mode 3", "Open");
 
 		timetableList = new ArrayList<TuitionTimetable>();
 	}
@@ -70,40 +70,48 @@ public class C206_CaseStudyTest {
 	}
 
 	@Test
-	public void doDeleteTuitionTimetableTest() {// Indra
+	public void deleteTuitionTimetableTest() { // Indra
 		// Make sure list is not null -Boundary
 		assertNotNull("Test if there is valid Tuition arraylist to retrieve item", timetableList);
 
-		// Test if Tuition Code can be removed -Normal
+		// Test if Timetable ID can be removed -Normal
 		C206_CaseStudy.addTimetable(timetableList, tt1);
-		Boolean ok = C206_CaseStudy.deleteTimetable(timetableList, 1);
+		Boolean ok = C206_CaseStudy.checkDeleteID(timetableList, 1);
 		assertTrue("Test if Tuition is ok to be deleted?", ok);
 
-		// Test if same Tuition Code can be removed again -Error
-		ok = C206_CaseStudy.deleteTimetable(timetableList, 1);
+		// Test if the same Timetable ID can be removed again -Error
+		ok = C206_CaseStudy.checkDeleteID(timetableList, 1);
 		assertFalse("Test that the same Tuition is NOT ok to be deleted again?", ok);
 
-		// Test if Tuition Code can be removed -Normal
+		// Test if Timetable ID can be removed -Normal
 		C206_CaseStudy.addTimetable(timetableList, tt2);
-		ok = C206_CaseStudy.deleteTimetable(timetableList, 2);
+		ok = C206_CaseStudy.checkDeleteID(timetableList, 2);
 		assertTrue("Test if a Tuition is ok to be deleted?", ok);
 
-		// Test if same Tuition can be removed again -Error
-		ok = C206_CaseStudy.deleteTimetable(timetableList, 2);
+		// Test if the same Timetable ID can be removed again -Error
+		ok = C206_CaseStudy.checkDeleteID(timetableList, 2);
 		assertFalse("Test that the same Tuition is NOT ok to be deleted again?", ok);
 
-		// Test if Tuition Code can be removed -Normal
+		// Test if Timetable ID can be removed -Normal
 		C206_CaseStudy.addTimetable(timetableList, tt3);
-		ok = C206_CaseStudy.deleteTimetable(timetableList, 3);
+		ok = C206_CaseStudy.checkDeleteID(timetableList, 3);
 		assertTrue("Test if a Tuition is ok to be deleted?", ok);
 
-		// Test if same Tuition Code can be removed again -Error
-		ok = C206_CaseStudy.deleteTimetable(timetableList, 3);
+		// Test if the same Timetable ID can be removed again -Error
+		ok = C206_CaseStudy.checkDeleteID(timetableList, 3);
 		assertFalse("Test that the same Tuition is NOT ok to be deleted again?", ok);
 
-		// Test if Tuition list size has dropped to 0 after removing the 3 test items
-		// -Normal
+		// Test if Timetable list size has dropped to 0 after removing the 3 timetables -Normal
 		assertEquals("Check that tuition list is not bigger than 0", 0, timetableList.size());
+	}
+	
+	@Test
+	public void searchTuitionTimetableTest() { // Indra
+		
+	}
+	
+	@Test
+	public void updateTuitionTimetableTest() { // Indra
 	}
 
 	@After
