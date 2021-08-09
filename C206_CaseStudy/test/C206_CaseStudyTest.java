@@ -257,22 +257,27 @@ public class C206_CaseStudyTest {
 
 	@Test
 	public void testDeleteRegistration() { // Norish
+		C206_CaseStudy.addRegistration(regList, r1);
+		C206_CaseStudy.addRegistration(regList, r2);
 		// test that list is not null
 		assertNotNull("Test that there is a valid Registration arraylist to delete item", regList);
 
 		// Test if reg ID can be deleted
 		C206_CaseStudy.addRegistration(regList, r1);
-		Boolean del = C206_CaseStudy.doDeleteRegistration(regList, 1);
+		Boolean del = C206_CaseStudy.doDeleteRegistration(regList, 100);
 		assertTrue("Test if registration is ok to be deleted?", del);
 
 		// Test if reg ID can be deleted
-		del = C206_CaseStudy.doDeleteRegistration(regList, 2);
+		del = C206_CaseStudy.doDeleteRegistration(regList, 200);
 		assertTrue("Test that the same registration is not ok to be deleted again?", del);
 
 	}
 
 @Test
 public void testSearchbyAcknowledgement() {// Norish
+	C206_CaseStudy.addRegistration(regList, r1);
+	C206_CaseStudy.addRegistration(regList, r2);
+
 	// test that registration list is not null to see registration's acknowledgement
 	assertNotNull("Test if there is valid Registration arraylist to search by acknowledgement", regList);
 	// test that acknowledgement exists when it's searched
@@ -281,10 +286,7 @@ public void testSearchbyAcknowledgement() {// Norish
 	boolean search = C206_CaseStudy.searchAcknowledgement(regList, testack);
 	assertTrue("Test if acknowledgement exists in registration list", search);
 	
-	// test that acknowledgement search is empty
-	String testack1 = "";
-	boolean search1 = C206_CaseStudy.searchAcknowledgement(regList, testack1);
-	assertTrue("Test if acknowledgement is empty", search1);
+	
 }
 
 	@After
