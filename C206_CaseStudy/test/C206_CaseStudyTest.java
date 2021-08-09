@@ -41,7 +41,7 @@ public class C206_CaseStudyTest {
 
 		timetableList = new ArrayList<TuitionTimetable>();
 
-		r1 = new Registration(1, 1, "hello@gmail.com", "", "yes", "", 100);
+		r1 = new Registration(1, 1, "hello@gmail.com", "", "yes", "", 100);  //Norish
 		r2 = new Registration(2, 2, "hello1@gmail.com", "", "yes", "", 200);
 
 		regList = new ArrayList<Registration>();
@@ -265,11 +265,11 @@ public class C206_CaseStudyTest {
 		// Test if reg ID can be deleted
 		C206_CaseStudy.addRegistration(regList, r1);
 		Boolean del = C206_CaseStudy.doDeleteRegistration(regList, 100);
-		assertTrue("Test if registration is ok to be deleted?", del);
+		assertTrue("Test if registration is can be deleted?", del);
 
 		// Test if reg ID can be deleted
 		del = C206_CaseStudy.doDeleteRegistration(regList, 200);
-		assertTrue("Test that the same registration is not ok to be deleted again?", del);
+		assertTrue("Test that registration is can be deleted again?", del);
 
 	}
 
@@ -281,6 +281,7 @@ public void testSearchbyAcknowledgement() {// Norish
 	// test that registration list is not null to see registration's acknowledgement
 	assertNotNull("Test if there is valid Registration arraylist to search by acknowledgement", regList);
 	// test that acknowledgement exists when it's searched
+	
 	String testack = "yes";
 
 	boolean search = C206_CaseStudy.searchAcknowledgement(regList, testack);
