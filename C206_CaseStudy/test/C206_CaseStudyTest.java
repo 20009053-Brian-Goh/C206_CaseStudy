@@ -1,3 +1,14 @@
+
+/**
+ * 
+ */
+
+/**
+ * I declare that this code was written by me. I will not copy or allow others
+ * to copy my code. I understand that copying code is considered as plagiarism.
+ *
+ * indra(20012784), 4 Aug 2021 4:34:10 pm
+ */
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;

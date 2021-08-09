@@ -1,6 +1,25 @@
+
+/**
+ * 
+ */
+
+/**
+ * I declare that this code was written by me. I will not copy or allow others
+ * to copy my code. I understand that copying code is considered as plagiarism.
+ *
+ * indra(20012784), 4 Aug 2021 4:34:10 pm
+ */
 import java.util.ArrayList;
 
 public class C206_CaseStudy {
+
+	private static final int UPDATE_TIMETABLE = 5;
+	private static final int SEARCH_TIMETABLE = 4;
+	private static final int DELETE_TIMETABLE = 3;
+	private static final int VIEW_TIMETABLE = 2;
+	private static final int ADD_TIMETABLE = 1;
+	private static final int TUITION_TIMETABLE = 3;
+	private static final int QUIT_PROGRAM = 5;
 
 	public static void main(String[] args) {
 
@@ -13,7 +32,7 @@ public class C206_CaseStudy {
 		int option = 0;
 		int optionTimetable = 0;
 
-		while (option != 5) {
+		while (option != QUIT_PROGRAM) {
 			menu();
 			option = Helper.readInt("Enter an option > ");
 
@@ -21,21 +40,21 @@ public class C206_CaseStudy {
 
 			} else if (option == 2) {
 
-			} else if (option == 3) { // Indra
+			} else if (option == TUITION_TIMETABLE) { // Indra
 				menuTimetable();
 				optionTimetable = Helper.readInt("Enter an option > ");
 
-				if (optionTimetable == 1) {
+				if (optionTimetable == ADD_TIMETABLE) {
 					TuitionTimetable tt = inputTimetable(tuitionTimetableList);
 					addTimetable(tuitionTimetableList, tt);
-				} else if (optionTimetable == 2) {
+				} else if (optionTimetable == VIEW_TIMETABLE) {
 					retrieveAllTimetable(tuitionTimetableList);
 					viewAllTimetable(tuitionTimetableList);
-				} else if (optionTimetable == 3) {
+				} else if (optionTimetable == DELETE_TIMETABLE) {
 					deleteTimetable(tuitionTimetableList);
-				} else if (optionTimetable == 4) {
+				} else if (optionTimetable == SEARCH_TIMETABLE) {
 					searchTimetable(tuitionTimetableList);
-				} else if (optionTimetable == 5) {
+				} else if (optionTimetable == UPDATE_TIMETABLE) {
 					updateTimetable(tuitionTimetableList);
 				} else {
 					System.out.println("Invalid option!");
