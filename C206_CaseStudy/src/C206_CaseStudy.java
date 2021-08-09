@@ -6,9 +6,9 @@ public class C206_CaseStudy {
 
 		ArrayList<TuitionTimetable> tuitionTimetableList = new ArrayList<TuitionTimetable>();
 
-		tuitionTimetableList.add(new TuitionTimetable(1, 100, "12", "13", "Mode 1", "Open"));
-		tuitionTimetableList.add(new TuitionTimetable(2, 200, "13", "12", "Mode 2", "Open"));
-		tuitionTimetableList.add(new TuitionTimetable(3, 300, "15", "14", "Mode 3", "Open"));
+		tuitionTimetableList.add(new TuitionTimetable("First", 1, 100, "12", "13", "Mode 1", "Open"));
+		tuitionTimetableList.add(new TuitionTimetable("Second", 2, 200.0, "13", "12", "Mode 2", "Open"));
+		tuitionTimetableList.add(new TuitionTimetable("Third", 3, 300.0, "15", "14", "Mode 3", "Open"));
 
 		int option = 0;
 		int optionTimetable = 0;
@@ -37,6 +37,8 @@ public class C206_CaseStudy {
 					searchTimetable(tuitionTimetableList);
 				} else if (optionTimetable == 5) {
 					updateTimetable(tuitionTimetableList);
+				} else {
+					System.out.println("Invalid option!");
 				}
 
 			} else if (option == 4) {
@@ -78,18 +80,14 @@ public class C206_CaseStudy {
 		Helper.line(80, "-");
 	}
 
-	public static void menuUpdateTimetable() { // Indra
+	public static void menuSearchTimetable() { // Indra
 		C206_CaseStudy.setHeader("Tuition Management System");
-		System.out.println("1. Timetable ID");
-		System.out.println("2. Price");
-		System.out.println("3. Start Date/Time");
-		System.out.println("4. End Date/Time");
-		System.out.println("5. Mode");
-		System.out.println("6. Status");
-		Helper.line(80, "-");
+		System.out.println("1. Search by title");
+		System.out.println("2. Search by price");
 	}
 
 	public static TuitionTimetable inputTimetable(ArrayList<TuitionTimetable> timetableList) { // Indra
+		String title = Helper.readString("Enter title > ");
 		int timetableID = Helper.readInt("Enter timetable ID > ");
 		double price = Helper.readDouble("Enter price > ");
 		String startDateTime = Helper.readString("Enter start date/time > ");
@@ -97,7 +95,7 @@ public class C206_CaseStudy {
 		String mode = Helper.readString("Enter mode > ");
 		String status = Helper.readString("Enter status > ");
 
-		TuitionTimetable tt = new TuitionTimetable(timetableID, price, startDateTime, endDateTime, mode, status);
+		TuitionTimetable tt = new TuitionTimetable(title, timetableID, price, startDateTime, endDateTime, mode, status);
 		return tt;
 
 	}
@@ -105,7 +103,7 @@ public class C206_CaseStudy {
 	public static boolean checkBlankSpaces(ArrayList<TuitionTimetable> tuitionTimetableList, TuitionTimetable tt) { // Indra
 		boolean isFound = false;
 
-		if (tt.getTimetableID() == 0 || tt.getPrice() == 0 || tt.getStartDateTime().isBlank()
+		if (tt.getTitle().isBlank() || tt.getTimetableID() == 0 || tt.getPrice() == 0 || tt.getStartDateTime().isBlank()
 				|| tt.getEndDateTime().isBlank() || tt.getMode().isBlank() || tt.getStatus().isBlank()) {
 			isFound = true;
 		}
@@ -146,17 +144,17 @@ public class C206_CaseStudy {
 
 		for (int i = 0; i < timetableList.size(); i++) {
 
-			output += String.format("%-30s %-20s %-30s %-30s %-20s %-15s\n", timetableList.get(i).getTimetableID(),
-					timetableList.get(i).getPrice(), timetableList.get(i).getStartDateTime(),
-					timetableList.get(i).getEndDateTime(), timetableList.get(i).getMode(),
-					timetableList.get(i).getStatus());
+			output += String.format("%-30s %-30s %-20s %-30s %-30s %-20s %-15s\n", timetableList.get(i).getTitle(),
+					timetableList.get(i).getTimetableID(), timetableList.get(i).getPrice(),
+					timetableList.get(i).getStartDateTime(), timetableList.get(i).getEndDateTime(),
+					timetableList.get(i).getMode(), timetableList.get(i).getStatus());
 		}
 		return output;
 	}
 
 	public static void viewAllTimetable(ArrayList<TuitionTimetable> timetableList) { // Indra
 		C206_CaseStudy.setHeader("TIMETABLE LIST");
-		String output = String.format("%-30s %-20s %-30s %-30s %-20s %-15s\n", "Timetable ID", "Price",
+		String output = String.format("%-30s %-30s %-20s %-30s %-30s %-20s %-15s\n", "Title", "Timetable ID", "Price",
 				"Start Date/Time", "End Date/Timee", "Mode", "Status");
 		output += retrieveAllTimetable(timetableList);
 		System.out.println(output);
@@ -167,7 +165,8 @@ public class C206_CaseStudy {
 
 		for (int i = 0; i < timetableList.size(); i++) {
 			int timetableID = timetableList.get(i).getTimetableID();
-			if (deleteID == timetableID) {
+			String status = timetableList.get(i).getStatus();
+			if (deleteID == timetableID && status.equalsIgnoreCase("open")) {
 				isFound = true;
 				timetableList.remove(i);
 			}
@@ -184,16 +183,28 @@ public class C206_CaseStudy {
 		if (isFound == true) {
 			System.out.println("The timetable with the ID, " + deleteID + " has been deleted!");
 		} else {
-			System.out.println("Invalid timetable ID!");
+			System.out.println("The timetable with the ID, " + deleteID + " cannot be deleted!");
 		}
 	}
 
-	public static boolean checkSearchID(ArrayList<TuitionTimetable> timetableList, int searchID) { // Indra
+	public static boolean checkSearchTitle(ArrayList<TuitionTimetable> timetableList, String searchTitle) {
 		boolean isFound = false;
 
 		for (int i = 0; i < timetableList.size(); i++) {
-			int timetableID = timetableList.get(i).getTimetableID();
-			if (searchID == timetableID) {
+			String title = timetableList.get(i).getTitle();
+			if (searchTitle.equalsIgnoreCase(title)) {
+				isFound = true;
+			}
+		}
+		return isFound;
+	}
+
+	public static boolean checkSearchPrice(ArrayList<TuitionTimetable> timetableList, double searchPrice) {
+		boolean isFound = false;
+
+		for (int i = 0; i < timetableList.size(); i++) {
+			double price = timetableList.get(i).getPrice();
+			if (searchPrice == price) {
 				isFound = true;
 			}
 		}
@@ -202,24 +213,53 @@ public class C206_CaseStudy {
 
 	public static void searchTimetable(ArrayList<TuitionTimetable> timetableList) { // Indra
 		String output = "";
-		int timetableID = Helper.readInt("Enter Timetable ID to search for > ");
-		boolean x = checkSearchID(timetableList, timetableID);
+		menuSearchTimetable();
+		int option = Helper.readInt("Enter option > ");
 
-		if (x == true) {
-			for (int i = 0; i < timetableList.size(); i++) {
-				if (timetableList.get(i).getTimetableID() == timetableID) {
-					output += String.format("%-30s %-20s %-30s %-30s %-20s %-15s\n", "Timetable ID", "Price",
-							"Start Date/Time", "End Date/Timee", "Mode", "Status");
-					output += String.format("%-30s %-20s %-30s %-30s %-20s %-15s\n",
-							timetableList.get(i).getTimetableID(), timetableList.get(i).getPrice(),
-							timetableList.get(i).getStartDateTime(), timetableList.get(i).getEndDateTime(),
-							timetableList.get(i).getMode(), timetableList.get(i).getStatus());
+		if (option == 1) {
+			String title = Helper.readString("Enter title > ");
+			boolean x = checkSearchTitle(timetableList, title);
+			if (x == true) {
+				for (int i = 0; i < timetableList.size(); i++) {
+					if (title.equalsIgnoreCase(timetableList.get(i).getTitle())) {
+						output += String.format("%-30s %-20s %-30s %-30s %-20s %-15s\n", "Timetable ID", "Price",
+								"Start Date/Time", "End Date/Timee", "Mode", "Status");
+						output += String.format("%-30s %-20s %-30s %-30s %-20s %-15s\n",
+								timetableList.get(i).getTimetableID(), timetableList.get(i).getPrice(),
+								timetableList.get(i).getStartDateTime(), timetableList.get(i).getEndDateTime(),
+								timetableList.get(i).getMode(), timetableList.get(i).getStatus());
 
-					System.out.println(output);
+						System.out.println(output);
+					}
 				}
+			} else {
+				System.out.println("Invalid Title!");
 			}
-		} else {
-			System.out.println("Invalid timetable ID!");
+		}
+
+		else if (option == 2) {
+			Double price = Helper.readDouble("Enter price > ");
+			boolean x = checkSearchPrice(timetableList, price);
+			if (x == true) {
+				for (int i = 0; i < timetableList.size(); i++) {
+					if (price == timetableList.get(i).getPrice()) {
+						output += String.format("%-30s %-20s %-30s %-30s %-20s %-15s\n", "Timetable ID", "Price",
+								"Start Date/Time", "End Date/Timee", "Mode", "Status");
+						output += String.format("%-30s %-20s %-30s %-30s %-20s %-15s\n",
+								timetableList.get(i).getTimetableID(), timetableList.get(i).getPrice(),
+								timetableList.get(i).getStartDateTime(), timetableList.get(i).getEndDateTime(),
+								timetableList.get(i).getMode(), timetableList.get(i).getStatus());
+
+						System.out.println(output);
+					}
+				}
+			} else {
+				System.out.println("Invalid Price!");
+			}
+		}
+
+		else {
+			System.out.println("Invalid option!");
 		}
 	}
 
@@ -238,46 +278,16 @@ public class C206_CaseStudy {
 	public static void updateTimetable(ArrayList<TuitionTimetable> timetableList) { // Indra
 		viewAllTimetable(timetableList);
 		int updateID = Helper.readInt("Enter Timetable ID to update > ");
-		menuUpdateTimetable();
-		int updateOption = Helper.readInt("Enter detail to update > ");
 		boolean x = checkUpdateID(timetableList, updateID);
 
 		if (x == true) {
-			switch (updateOption) {
-			case 1:
-				int newTimetableID = Helper.readInt("Enter new Timetable ID > ");
-				timetableList.get(updateOption).setTimetableID(newTimetableID);
-				System.out.println("Timetable ID Successfully Updated!");
-				break;
-			case 2:
-				double newPrice = Helper.readInt("Enter new Price > ");
-				timetableList.get(updateOption).setPrice(newPrice);
-				System.out.println("Price Successfully Updated!");
-				break;
-			case 3:
-				String newStartDateTime = Helper.readString("Enter new Start Date/Time > ");
-				timetableList.get(updateOption).setStartDateTime(newStartDateTime);
-				System.out.println("Start Date/Time Successfully Updated!");
-				break;
-			case 4:
-				String newEndDateTime = Helper.readString("Enter new End Date/Time > ");
-				timetableList.get(updateOption).setEndDateTime(newEndDateTime);
-				System.out.println("End Date/Time Successfully Updated!");
-				break;
-			case 5:
-				String newMode = Helper.readString("Enter new Mode > ");
-				timetableList.get(updateOption).setMode(newMode);
-				System.out.println("Mode Successfully Updated!");
-				break;
-			case 6:
-				String newStatus = Helper.readString("Enter new Status > ");
-				timetableList.get(updateOption).setStatus(newStatus);
-				System.out.println("Status Successfully Updated!");
-				break;
-			case 7:
-				System.out.println("Invalid option!");
+			for (int i = 0; i < timetableList.size(); i++) {
+				if (timetableList.get(i).getTimetableID() == updateID) {
+					String newStatus = Helper.readString("Enter new status > ");
+					timetableList.get(i).setStatus(newStatus);
+					System.out.println("Status successfully updated!");
+				}
 			}
-
 		} else {
 			System.out.println("Invalid Timetable ID!");
 		}
