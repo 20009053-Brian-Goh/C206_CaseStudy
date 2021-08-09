@@ -1,3 +1,4 @@
+
 /**
  * 
  */
@@ -20,7 +21,11 @@ public class C206_CaseStudyTest {
 	private TuitionTimetable tt2;
 	private TuitionTimetable tt3;
 
+	private Registration r1;
+	private Registration r2;
+
 	private ArrayList<TuitionTimetable> timetableList;
+	ArrayList<Registration> regList = new ArrayList<Registration>();
 
 	public C206_CaseStudyTest() {
 		super();
@@ -35,6 +40,11 @@ public class C206_CaseStudyTest {
 		tt3 = new TuitionTimetable("Third", 3, 300.0, "15", "14", "Mode 3", "Open");
 
 		timetableList = new ArrayList<TuitionTimetable>();
+
+		r1 = new Registration(1, 1, "hello@gmail.com", "", "yes", "", 100);
+		r2 = new Registration(2, 2, "hello1@gmail.com", "", "yes", "", 200);
+
+		regList = new ArrayList<Registration>();
 	}
 
 	@Test
@@ -206,6 +216,77 @@ public class C206_CaseStudyTest {
 
 	}
 
+	@Test
+	public void testaddRegistration() { // Norish
+		// Item list is not null, so that can add new registration
+		assertNotNull("Test if there is valid Registration arraylist to add to", regList);
+
+		// Given an empty list, after adding 1 item, the size of the list is 1
+		C206_CaseStudy.addRegistration(regList, r1);
+		assertEquals("Test if that Registration arraylist size is 1?", 1, regList.size());
+
+		// The item just added is the same as the first item of the list
+		assertSame("Test that registration just added is the same as 1st item of the list?", r1, regList.get(0));
+
+		// Add another item. test The size of the list is 2?
+		C206_CaseStudy.addRegistration(regList, r2);
+		assertEquals("Test that Registration arraylist size is 2?", 2, regList.size());
+
+		// The item just added is the same as the second item of the list
+		assertSame("Test that second registration just added is the same as 2nd item of the list?", r2, regList.get(1));
+
+	}
+
+	@Test
+	public void testretrieveAllRegistrations() { // Norish
+		// test if Registration list is not null but empty, so that can retrieve item
+		assertNotNull("Test if there is valid Registration arraylist to retrieve registration", regList);
+
+		// test if the list of registrations retrieved from the C206_CaseStudy is empty
+		String allRegistrations = C206_CaseStudy.retrieveAllRegistrations(regList);
+		String testOutput = "";
+		assertEquals("Test that the retrieved reglist is empty", testOutput, allRegistrations);
+
+		// Given an empty list, after adding 2 registrations, test if the size of the
+		// list is 2
+		C206_CaseStudy.addRegistration(regList, r1);
+		C206_CaseStudy.addRegistration(regList, r2);
+		assertEquals("Test that registration arraylist size is 2?", 2, regList.size());
+
+	}
+
+	@Test
+	public void testDeleteRegistration() { // Norish
+		// test that list is not null
+		assertNotNull("Test that there is a valid Registration arraylist to delete item", regList);
+
+		// Test if reg ID can be deleted
+		C206_CaseStudy.addRegistration(regList, r1);
+		Boolean del = C206_CaseStudy.doDeleteRegistration(regList, 1);
+		assertTrue("Test if registration is ok to be deleted?", del);
+
+		// Test if reg ID can be deleted
+		del = C206_CaseStudy.doDeleteRegistration(regList, 2);
+		assertTrue("Test that the same registration is not ok to be deleted again?", del);
+
+	}
+
+@Test
+public void testSearchbyAcknowledgement() {// Norish
+	// test that registration list is not null to see registration's acknowledgement
+	assertNotNull("Test if there is valid Registration arraylist to search by acknowledgement", regList);
+	// test that acknowledgement exists when it's searched
+	String testack = "yes";
+
+	boolean search = C206_CaseStudy.searchAcknowledgement(regList, testack);
+	assertTrue("Test if acknowledgement exists in registration list", search);
+	
+	// test that acknowledgement search is empty
+	String testack1 = "";
+	boolean search1 = C206_CaseStudy.searchAcknowledgement(regList, testack1);
+	assertTrue("Test if acknowledgement is empty", search1);
+}
+
 	@After
 	public void tearDown() throws Exception { // Indra
 		tt1 = null;
@@ -213,5 +294,10 @@ public class C206_CaseStudyTest {
 		tt3 = null;
 
 		timetableList = null;
+
+		r1 = null; // Norish
+		r2 = null;
+		regList = null;
+
 	}
 }

@@ -9,6 +9,8 @@
  *
  * indra(20012784), 4 Aug 2021 4:34:10 pm
  */
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class C206_CaseStudy {
@@ -20,9 +22,11 @@ public class C206_CaseStudy {
 	private static final int ADD_TIMETABLE = 1;
 	private static final int TUITION_TIMETABLE = 3;
 	private static final int QUIT_PROGRAM = 5;
+	private static final int OPTION_REGISTRATION_QUIT = 5;
 
 	public static void main(String[] args) {
 
+		ArrayList<Registration> regList = new ArrayList<Registration>();
 		ArrayList<TuitionTimetable> tuitionTimetableList = new ArrayList<TuitionTimetable>();
 
 		tuitionTimetableList.add(new TuitionTimetable("First", 1, 100, "12", "13", "Mode 1", "Open"));
@@ -31,6 +35,7 @@ public class C206_CaseStudy {
 
 		int option = 0;
 		int optionTimetable = 0;
+		int optionReg = 0;
 
 		while (option != QUIT_PROGRAM) {
 			menu();
@@ -38,7 +43,31 @@ public class C206_CaseStudy {
 
 			if (option == 1) {
 
-			} else if (option == 2) {
+			} else if (option == 2) { // Norish
+				while (option != QUIT_PROGRAM) {
+					C206_CaseStudy.menuRegistration();
+					optionReg = Helper.readInt("Enter an option > ");
+
+					if (optionReg == 1) {
+						Registration reg = register();
+						C206_CaseStudy.addRegistration(regList, reg);
+
+					} else if (optionReg == 2) {
+						C206_CaseStudy.viewAllRegistrations(regList);
+
+					} else if (optionReg == 3) {
+						C206_CaseStudy.deleteRegistration(regList);
+
+					} else if (optionReg == 4) {
+						C206_CaseStudy.SearchbyAcknowledgement(regList);
+
+					} else if (optionReg == OPTION_REGISTRATION_QUIT) {
+						System.out.println("Bye!");
+
+					} else {
+						System.out.println("Invalid option");
+					}
+				}
 
 			} else if (option == TUITION_TIMETABLE) { // Indra
 				menuTimetable();
@@ -86,6 +115,16 @@ public class C206_CaseStudy {
 	public static void setHeader(String header) {
 		Helper.line(80, "-");
 		System.out.println(header);
+		Helper.line(80, "-");
+	}
+
+	public static void menuRegistration() { // Norish
+		C206_CaseStudy.setHeader("Registration");
+		System.out.println("1. Register for a TimeTable");
+		System.out.println("2. View All Registrations");
+		System.out.println("3. Delete Registration");
+		System.out.println("4. Search Registration by Acknowledgement");
+		System.out.println("5. Quit");
 		Helper.line(80, "-");
 	}
 
@@ -309,6 +348,118 @@ public class C206_CaseStudy {
 			}
 		} else {
 			System.out.println("Invalid Timetable ID!");
+		}
+	}
+
+	public static Registration register() { // Norish
+		int regNo = Helper.readInt("Enter registration number > ");
+		int ttid = Helper.readInt("Enter timetable ID > ");
+		String email = Helper.readString("Enter email > ");
+		String status = "";
+		LocalDateTime datetime = LocalDateTime.now();
+		DateTimeFormatter formatter1 = DateTimeFormatter.ofPattern("dd/MM/YYYY hh:mm a");
+		String acknowledgement = Helper.readString(("Accept terms & conditions? > "));
+		int regID = Helper.readInt("Enter registration ID (must be unique) > ");
+
+		Registration reg = new Registration(regNo, ttid, email, status, datetime.format(formatter1), acknowledgement,
+				regID);
+
+		return reg;
+	}
+
+	public static void addRegistration(ArrayList<Registration> regList, Registration reg) { // Norish
+		if (reg.getEmail().isEmpty() || (reg.getAcknowledgement().isEmpty())) {
+			System.out.println("Please fill up all details!");
+		} else {
+			regList.add(reg);
+
+			System.out.println("Registered!");
+		}
+
+	}
+
+	public static String retrieveAllRegistrations(ArrayList<Registration> regList) { // Norish
+		String output = "";
+
+		for (int i = 0; i < regList.size(); i++) {
+
+			output += String.format("%-143s \n", regList.get(i).toString());
+		}
+		return output;
+	}
+
+	public static void viewAllRegistrations(ArrayList<Registration> regList) { // Norish
+		C206_CaseStudy.setHeader("Registration List");
+		if (regList.isEmpty()) {
+			System.out.println("There are no registrations.");
+		} else {
+			String output = String.format("%-18s %-18s %-30s %-10s %-25s %-25s %-10s\n", "REGISTRATION NO",
+					"TIMETABLE ID", "EMAIL", "STATUS", "ACKNOWLEDGEMENT", "DATE/TIME REGISTERED", "REGISTRATION ID");
+			output += retrieveAllRegistrations(regList);
+			System.out.println(output);
+		}
+
+	}
+
+	public static boolean doDeleteRegistration(ArrayList<Registration> regList, int deleteregID) { // Norish
+		boolean isFound = false;
+		for (int i = 0; i < regList.size(); i++) {
+			int regID = regList.get(i).getRegID();
+			if (deleteregID == regID) {
+				regList.remove(i);
+				isFound = true;
+			}
+		}
+		return isFound;
+	}
+
+	public static void deleteRegistration(ArrayList<Registration> regList) { // Norish
+		C206_CaseStudy.viewAllRegistrations(regList);
+		int deleteregID = Helper.readInt("Enter Registration ID >  ");
+		boolean isFound = doDeleteRegistration(regList, deleteregID);
+
+		if (isFound == false) {
+			System.out.println("Invalid registration ID!");
+		} else {
+			System.out.println("The registration ID " + deleteregID + " has been deleted!");
+		}
+
+	}
+
+	public static boolean searchAcknowledgement(ArrayList<Registration> regList, String searchAck) { // Norish
+		boolean isFound = false;
+
+		for (int i = 0; i < regList.size(); i++) {
+			String ack = regList.get(i).getAcknowledgement();
+			if (searchAck.equalsIgnoreCase(ack)) {
+				isFound = true;
+			}
+		}
+		return isFound;
+	}
+
+	public static void SearchbyAcknowledgement(ArrayList<Registration> regList) { // Norish
+
+		String ack = Helper.readString("Enter acknowledgement > ");
+		boolean search = searchAcknowledgement(regList, ack);
+		if (search == true) {
+			for (int i = 0; i < regList.size(); i++) {
+				if (ack.equalsIgnoreCase(regList.get(i).getAcknowledgement())) {
+					String output = String.format("%-18s %-18s %-30s %-10s %-25s %-25s %-10s\n", "REGISTRATION NO",
+							"TIMETABLE ID", "EMAIL", "STATUS", "ACKNOWLEDGEMENT", "DATE/TIME REGISTERED",
+							"REGISTRATION ID");
+					output += String.format("%-18s %-18s %-30s %-10s %-25s %-25s %-10s\n", regList.get(i).getRegNo(),
+							regList.get(i).getTtid(), regList.get(i).getEmail(), regList.get(i).getStatus(),
+							regList.get(i).getAcknowledgement(), regList.get(i).getDatetime(),
+							regList.get(i).getRegID());
+
+					System.out.println(output);
+				}
+			}
+
+		} else {
+			System.out.println("Invalid acknowledgement!");
+
 		}
 	}
 }
