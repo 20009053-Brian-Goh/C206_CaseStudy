@@ -1,13 +1,14 @@
+
 /**
  * 
  */
+
 /**
  * I declare that this code was written by me. I will not copy or allow others
  * to copy my code. I understand that copying code is considered as plagiarism.
  *
  * indra(20012784), 4 Aug 2021 4:34:10 pm
  */
-
 import java.util.ArrayList;
 
 public class C206_CaseStudy {
@@ -36,6 +37,7 @@ public class C206_CaseStudy {
 			option = Helper.readInt("Enter an option > ");
 
 			if (option == 1) {
+
 			} else if (option == 2) {
 
 			} else if (option == TUITION_TIMETABLE) { // Indra
@@ -204,7 +206,7 @@ public class C206_CaseStudy {
 		}
 	}
 
-	public static boolean checkSearchTitle(ArrayList<TuitionTimetable> timetableList, String searchTitle) { // Indra
+	public static boolean checkSearchTitle(ArrayList<TuitionTimetable> timetableList, String searchTitle) {
 		boolean isFound = false;
 
 		for (int i = 0; i < timetableList.size(); i++) {
@@ -216,7 +218,7 @@ public class C206_CaseStudy {
 		return isFound;
 	}
 
-	public static boolean checkSearchPrice(ArrayList<TuitionTimetable> timetableList, double searchPrice) { // Indra
+	public static boolean checkSearchPrice(ArrayList<TuitionTimetable> timetableList, double searchPrice) {
 		boolean isFound = false;
 
 		for (int i = 0; i < timetableList.size(); i++) {

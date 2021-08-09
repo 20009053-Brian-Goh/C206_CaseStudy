@@ -1,13 +1,13 @@
 /**
  * 
  */
+
 /**
  * I declare that this code was written by me. I will not copy or allow others
  * to copy my code. I understand that copying code is considered as plagiarism.
  *
  * indra(20012784), 4 Aug 2021 4:34:10 pm
  */
-
 public class TuitionTimetable { // Indra
 	private String title;
 	private int timetableID;
@@ -28,7 +28,7 @@ public class TuitionTimetable { // Indra
 		this.status = "Open";
 	}
 
-	public int getTimetableID() { // Indra
+	public int getTimetableID() { // Indra 
 		return timetableID;
 	}
 
