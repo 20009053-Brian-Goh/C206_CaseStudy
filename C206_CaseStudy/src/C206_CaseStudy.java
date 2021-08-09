@@ -7,6 +7,7 @@
  *
  * indra(20012784), 4 Aug 2021 4:34:10 pm
  */
+
 import java.util.ArrayList;
 
 public class C206_CaseStudy {
