@@ -265,11 +265,12 @@ public class C206_CaseStudyTest {
 		// Test if reg ID can be deleted
 		C206_CaseStudy.addRegistration(regList, r1);
 		Boolean del = C206_CaseStudy.doDeleteRegistration(regList, 100);
-		assertTrue("Test if registration is can be deleted?", del);
+		assertTrue("Test if registration can be deleted?", del);
 
 		// Test if reg ID can be deleted
+		C206_CaseStudy.addRegistration(regList, r2);
 		del = C206_CaseStudy.doDeleteRegistration(regList, 200);
-		assertTrue("Test that registration is can be deleted again?", del);
+		assertTrue("Test that registration can be deleted?", del);
 
 	}
 
