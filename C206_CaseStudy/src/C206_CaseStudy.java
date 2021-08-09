@@ -37,7 +37,6 @@ public class C206_CaseStudy {
 			option = Helper.readInt("Enter an option > ");
 
 			if (option == 1) {
-
 			} else if (option == 2) {
 
 			} else if (option == TUITION_TIMETABLE) { // Indra
@@ -206,7 +205,7 @@ public class C206_CaseStudy {
 		}
 	}
 
-	public static boolean checkSearchTitle(ArrayList<TuitionTimetable> timetableList, String searchTitle) {
+	public static boolean checkSearchTitle(ArrayList<TuitionTimetable> timetableList, String searchTitle) { // Indra
 		boolean isFound = false;
 
 		for (int i = 0; i < timetableList.size(); i++) {
@@ -218,7 +217,7 @@ public class C206_CaseStudy {
 		return isFound;
 	}
 
-	public static boolean checkSearchPrice(ArrayList<TuitionTimetable> timetableList, double searchPrice) {
+	public static boolean checkSearchPrice(ArrayList<TuitionTimetable> timetableList, double searchPrice) { // Indra
 		boolean isFound = false;
 
 		for (int i = 0; i < timetableList.size(); i++) {

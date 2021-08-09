@@ -8,7 +8,6 @@
  *
  * indra(20012784), 4 Aug 2021 4:34:10 pm
  */
-
 public class TuitionTimetable { // Indra
 	private String title;
 	private int timetableID;
