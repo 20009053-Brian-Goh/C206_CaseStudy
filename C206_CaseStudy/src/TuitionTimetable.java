@@ -28,7 +28,7 @@ public class TuitionTimetable { // Indra
 		this.status = "Open";
 	}
 
-	public int getTimetableID() { // Indra 
+	public int getTimetableID() { // Indra
 		return timetableID;
 	}
 
